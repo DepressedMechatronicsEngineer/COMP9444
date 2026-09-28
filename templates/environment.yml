@@ -1,0 +1,17 @@
+name: comp9444
+
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.12
+  - numpy
+  - pillow
+  - matplotlib
+  - tqdm
+  - jupyter
+  - ipykernel
+  - pytorch
+  - torchvision
