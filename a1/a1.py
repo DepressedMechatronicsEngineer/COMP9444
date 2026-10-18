@@ -12,7 +12,7 @@ import torch.optim as optim
 import sklearn.metrics as metrics
 import numpy as np
 from torchvision import datasets, transforms
-from ass1.net import NetLin, NetSkip, NetConv
+from net import NetLin, NetSkip, NetConv
     
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train() # switch to training mode
