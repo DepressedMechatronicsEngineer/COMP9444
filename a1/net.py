@@ -57,25 +57,25 @@ class NetConv(nn.Module):
     # and one fully connected (output) layer
     def __init__(self):
         super(NetConv, self).__init__()
-        self.conv1 = nn.Conv2d(1, 6, kernel_size=8, stride=2)    # 28x28 -> 6 x 11x11
-        self.conv2 = nn.Conv2d(6, 16, kernel_size=5, stride=2)   # 11x11 -> 16 x 4x4
-        self.fc1 = nn.Linear(256, 96)                            # 16*4*4 = 256
+        self.conv1 = nn.Conv2d(1, 6, kernel_size=8, stride=2)
+        self.conv2 = nn.Conv2d(6, 16, kernel_size=5, stride=2)
+        self.fc1 = nn.Linear(256, 96)
         self.fc2 = nn.Linear(96, 10)
  
     def forward(self, x):
-        x = x.view(x.shape[0], 1, 28, 28)       # ensure [b, 1, 28, 28]
-        x = F.relu(self.conv1(x))               # [b, 6, 11, 11]
-        x = F.relu(self.conv2(x))               # [b, 16, 4, 4]
-        flat = x.view(x.shape[0], -1)           # [b, 256]
-        hid = F.relu(self.fc1(flat))            # [b, 96]
-        return self.fc2(hid)                    # [b, 10]
+        x = x.view(x.shape[0], 1, 28, 28)
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        flat = x.reshape(x.shape[0], 256)
+        hid = F.relu(self.fc1(flat))
+        return self.fc2(hid)
  
     def viz(self): # create and save images
-        weights = self.conv1.weight.data        # [6, 1, 8, 8]
+        weights = self.conv1.weight.data
         for h in range(6):
             img = min_max_scale(weights[h].reshape(8, 8))
             img = torchvision.transforms.functional.to_pil_image(img)
-            img = img.resize((8 * 30, 8 * 30), resample=0)  # enlarge for readability
+            img = img.resize((8 * 30, 8 * 30), resample=0)
             img.save('filt' + str(h) + '.png')
 
 
